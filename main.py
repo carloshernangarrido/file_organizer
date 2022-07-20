@@ -32,7 +32,7 @@ def organize_all(file_list, dest):
             if not os.path.exists(os.path.join(dest, year, month)):
                 os.mkdir(os.path.join(dest, year, month))
             if not os.path.exists(os.path.join(dest, year, month, os.path.basename(file))):
-                print('copying', file, 'to', os.path.join(dest, year, month), 'because does not exists')
+                print('copying', file, 'to', os.path.join(dest, year, month), 'because it does not exists')
                 shutil.copy(file, os.path.join(dest, year, month))
                 number_copied_files += 1
             else:
@@ -41,7 +41,7 @@ def organize_all(file_list, dest):
                     shutil.copy(file, os.path.join(dest, year, month))
                     number_copied_files += 1
                 else:
-                    print('skiping', file, 'because existing is larger')
+                    print('skiping', file, 'because existing is larger or equal')
         else:
             if os.path.splitext(file)[1] == '.zip':
                 print('skiping', file)
