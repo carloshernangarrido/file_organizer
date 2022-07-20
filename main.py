@@ -25,6 +25,8 @@ def organize_all(file_list, dest):
     for file in file_list:
         ismedia, year, month, day = get_year_month_day(file)
         if ismedia:
+            if not os.path.exists(dest):
+                os.mkdir(dest)
             if not os.path.exists(os.path.join(dest, year)):
                 os.mkdir(os.path.join(dest, year))
             if not os.path.exists(os.path.join(dest, year, month)):
@@ -44,7 +46,7 @@ def organize_all(file_list, dest):
             if os.path.splitext(file)[1] == '.zip':
                 print('skiping', file)
             else:
-                print('copying ', file, ' to ', const.NONCOPIED_PATH)
+                print('copying', file, 'to', const.NONCOPIED_PATH)
                 noncopied_files.append(file)
                 if not os.path.exists(const.NONCOPIED_PATH):
                     os.mkdir(const.NONCOPIED_PATH)
@@ -56,5 +58,5 @@ if __name__ == '__main__':
     files = [os.path.join(path, name) for path, subdirs, files in os.walk(const.SOURCE_PATH) for name in files]
     unzip_all(files)
     noncopied, n_copied = organize_all(files, const.DESTINY_PATH)
-    print(f'*** {n_copied} copied files of {len(files)}')
+    print(f'*** {n_copied} copied files of {len(files)} ***')
 
