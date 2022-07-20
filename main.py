@@ -1,4 +1,10 @@
 import os
+import zipfile
+
+import PIL
+from PIL import Image
+import ffmpeg
+
 import const
 
 
@@ -20,26 +26,36 @@ def create_structure(path, year_first, year_last):
     return years
 
 
+def unzip_all(file_list):
+    for file in file_list:
+        if zipfile.is_zipfile(file):
+            print('unziping ', file, '...')
+            dirname = os.path.splitext(file)[0]
+            try:
+                os.mkdir(dirname)
+                with zipfile.ZipFile(file, "r") as z:
+                    z.extractall(dirname)
+            except FileExistsError:
+                print('File', file, 'was already extracted')
+
+
+def organize_all(file_list):
+    for file in file_list:
+        try:
+            time_stamp = PIL.Image.open(file).getexif()[306]
+            print(file, time_stamp)
+        except PIL.UnidentifiedImageError:
+            print(file, 'is not an image')
+            # try:
+            p = ffmpeg.probe(file)
+            print(p)
+            # except
+
+
+
 if __name__ == '__main__':
     print(create_structure(path=const.DESTINY_PATH, year_first=const.YEAR_FIRST, year_last=const.YEAR_LAST))
-    a = [os.path.join(path, name) for path, subdirs, files in os.walk(const.SOURCE_PATH) for name in files]
+    files = [os.path.join(path, name) for path, subdirs, files in os.walk(const.SOURCE_PATH) for name in files]
+    unzip_all(files)
+    organize_all(files)
     q = 0
-
-    # for ruta, directorios, archivos in os.walk(const.SOURCE_PATH, topdown=True):
-    #     print(ruta, directorios, archivos)
-        # print('\nruta       :', ruta)
-        # for elemento in archivos:
-        #     num_archivos += 1
-        #     archivo = ruta + os.sep + elemento
-        #     estado = os.stat(archivo)
-        #     tamaño = estado.st_size
-        #     ult_acceso = datetime.fromtimestamp(estado.st_atime)
-        #     modificado = datetime.fromtimestamp(estado.st_mtime)
-        #     ult_acceso = ult_acceso.strftime(formato)
-        #     modificado = modificado.strftime(formato)
-        #     total += tamaño
-        #     print(linea)
-        #     print('archivo      :', elemento)
-        #     print('modificado   :', modificado)
-        #     print('último acceso:', ult_acceso)
-        #     print('tamaño (Kb)  :', round(tamaño / 1024, 1))
