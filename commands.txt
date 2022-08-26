@@ -1,0 +1,9 @@
+activate venv
+-------------
+cmd (if is in Powe Shell)
+cd venv
+cd Scripts
+activate
+
+install requierements
+pip install -r requirements.txt
