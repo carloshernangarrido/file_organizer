@@ -3,7 +3,6 @@ import shutil
 import sys
 import zipfile
 import logging
-
 import const
 from date_extraction import get_year_month_day
 

@@ -6,6 +6,7 @@ from PIL import Image
 
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
+from hachoir.stream.input import NullStreamError
 
 
 def creation_date(filename):
@@ -25,6 +26,8 @@ def get_year_month_day(file):
         except ValueError:
             time_stamp = None
         except AttributeError:
+            time_stamp = None
+        except NullStreamError:
             time_stamp = None
     except KeyError:
         time_stamp = None
