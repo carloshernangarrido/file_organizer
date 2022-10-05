@@ -1,6 +1,6 @@
 activate venv
 -------------
-cmd (if is in Powe Shell)
+cmd (if is in Power Shell)
 cd venv
 cd Scripts
 activate
