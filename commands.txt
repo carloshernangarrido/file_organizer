@@ -5,5 +5,5 @@ cd venv
 cd Scripts
 activate
 
-install requierements
+install requirements
 pip install -r requirements.txt
